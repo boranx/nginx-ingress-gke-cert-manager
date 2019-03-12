@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/rewrite-target: /$1
+    # nginx.ingress.kubernetes.io/app-root: /
+    # nginx.ingress.kubernetes.io/add-base-url : "true"
+  name: gdgcloud-ingress
+  namespace: default
+spec:
+  rules:
+    - host: test.boran.fun
+      http:
+        paths:
+          - path: /
+            backend:
+                serviceName: test-api
+                servicePort: 8091
+    - host: demo.boran.fun
+      http:
+        paths:
+          - path: /
+            backend:
+                serviceName: demo-api
+                servicePort: 8090
+  tls:
+    - hosts:
+        - test.boran.fun
+        - demo.boran.fun
+      secretName: gdgcloud-crt

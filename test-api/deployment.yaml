@@ -1,0 +1,30 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: test-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: test-api
+    spec:
+      containers:
+      - image: boranx/test-api:latest
+        imagePullPolicy: Always
+        name: test-api
+        ports:
+        - containerPort: 8091
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-api
+spec:
+  ports:
+  - port: 8091
+    targetPort: 8091
+    protocol: TCP
+  selector:
+    app: test-api
